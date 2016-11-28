@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for Site_Frigo project.
 
@@ -29,8 +30,10 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+DJANGO_SETTINGS_MODULE = 'Site_Frigo.settings'
 
 INSTALLED_APPS = [
+    'fridgeApp.apps.FridgeappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
