@@ -26,3 +26,8 @@ class Ingredient(models.Model):
     unit = models.CharField(max_length = 30)
     def __str__(self):
         return self.ingredient_text
+
+class Legume (models.Model):
+    #sev tente des trucs
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    
