@@ -14,8 +14,8 @@ class Recipe(models.Model):
 class Cook_information(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     information_text = models.CharField(max_length = 200)
-    time = models.FloatField()
-    time_unit = models.CharField(max_length = 30)
+    value = models.FloatField()
+    value_unit = models.CharField(max_length = 30)
     def __str__(self):
         return self.information_text
         
