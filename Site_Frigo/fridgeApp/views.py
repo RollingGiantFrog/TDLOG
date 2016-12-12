@@ -10,3 +10,6 @@ class IndexView(generic.ListView):
     
     def get_queryset(self):
         return Recipe.objects.all()
+        
+def Contact(request):
+    return(render(request, 'fridgeApp/contact.html'))

@@ -6,4 +6,5 @@ app_name = 'fridgeApp'
 
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^contact$', views.Contact, name='contact'),
 ]
