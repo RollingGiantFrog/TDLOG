@@ -5,6 +5,6 @@ from . import views
 app_name = 'fridgeApp'
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.home),
     url(r'^contact$', views.Contact(), name='contact'),
 ]
