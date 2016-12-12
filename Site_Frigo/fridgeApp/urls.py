@@ -6,5 +6,5 @@ app_name = 'fridgeApp'
 
 urlpatterns = [
     url(r'^$', views.home),
-    url(r'^contact$', views.Contact(), name='contact'),
+    url(r'^contact$', views.Contact, name='contact'),
 ]
