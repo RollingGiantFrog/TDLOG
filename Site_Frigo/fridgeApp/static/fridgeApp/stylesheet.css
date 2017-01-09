@@ -1,6 +1,7 @@
 head
 {
-	
+    background: white url("images/header.jpg") no-repeat;
+	height: 200px;
 }
 
 body
