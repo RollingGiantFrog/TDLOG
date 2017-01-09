@@ -27,7 +27,8 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.ingredient_text
 
-class Legume (models.Model):
-    #sev tente des trucs
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    
+#class Instructions (models.Model):
+#    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+#    instructions_text = models.CharField(max_length = 1500)
+#    def __str__(self):
+#        return "Consignes"

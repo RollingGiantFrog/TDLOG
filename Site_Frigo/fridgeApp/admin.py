@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Recipe, Ingredient, Cook_information
+from .models import Recipe, Ingredient, Cook_information #, Instructions
 # Register your models here.
 class IngredientInline(admin.TabularInline):
     model = Ingredient
@@ -11,6 +11,10 @@ class CookInline(admin.TabularInline):
     model = Cook_information
     extra = 1
 
+#class InstructionsInLine(admin.TabularInline):
+#    model = Instructions
+#    extra = 1    
+    
 class RecipeAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,              {'fields':['recipe_text']}),
@@ -18,6 +22,8 @@ class RecipeAdmin(admin.ModelAdmin):
 #        ('Cooking information', {'fields':['cook_time','rest_time',
 #'preparation_time'], 'classes':['collapse']}),
     ]
-    inlines = [IngredientInline, CookInline]
+    inlines = [IngredientInline, CookInline
+               #, InstructionsInLine
+               ]
 
 admin.site.register(Recipe, RecipeAdmin)
