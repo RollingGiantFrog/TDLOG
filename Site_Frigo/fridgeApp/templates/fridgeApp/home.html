@@ -5,24 +5,50 @@
 
 <head>
 	<meta charset="utf-8" />
-	<a href="#">
-        <img src="{% static 'fridgeApp/images/header.jpg' %}" border=0 >
-    </a>
-	
 	
 	<title>
 		Projet Frigo
 	</title>
 </head>
-<nav>
-	<ul>
-		<li><a class="active" href="#about">Accueil</a></li>
-		<li><a href="#search">Recherche</a></li>
-		<li><a href="#add">Ajouter une recette</a></li>
-		<li><a href="#who">Qui sommes-nous ?</a></li>
-	</ul>
-</nav>
 <body>
-	<h1> Voici notre site de recettes trop stylé </h1>
-	<p> Vous pouvez naviguer librement sur ce site afin de rechercher des recettes en fonction des ingrédients présents dans votre frigo. Bon appétit ! </p>
+	<header>
+		<a href="fridgeApp/"></a>
+	</header>
+
+	<nav>
+		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
+		<strong>Projet Frigo, le site de recette pour étudiant !</strong>
+		<ul>
+			<li><a class="active" href="#about">Accueil</a></li>
+			<li><a href="#search">Recherche</a></li>
+			<li><a href="#add">Ajouter une recette</a></li>
+			<li><a href="#who">Qui sommes-nous ?</a></li>
+		</ul>
+	</nav>
+	
+	<section>
+		<div class="title"><strong>Nouvelle année</strong></div>
+		
+		<p>Voici notre site de recettes trop stylé :)</br>
+		Vous pouvez naviguer librement sur ce site afin de rechercher des recettes en fonction des ingrédients présents dans votre frigo. Bon appétit ! </p>
+	</section>
+	
+	<aside>
+		<div class="title"><strong>Dernières recettes ajoutées</strong></div>
+		
+		<p>Cette section est vide pour le moment</p>
+	</aside>
+	
+	<section>
+		<div class="title"><strong>Le site est créé !</strong></div>
+		
+		<p>Nous avons initialisé le site avec le framework Django, nous devons maintenant remplir les différentes pages du site ainsi que la base de données !</p>
+	</section>
+	
+	<section>
+		<div class="title"><strong>Début du projet</strong></div>
+		
+		<p>Nous commençons à nous familiariser avec Git</br>
+		Il a été installé sur nos ordinateurs et nous avons créé un projet commun. Il ne reste plus qu'à le remplir !</p>
+	</section>
 </body>
