@@ -1,25 +1,45 @@
-head
+header
 {
-    background: white url("images/header.jpg") no-repeat;
-	height: 200px;
+	margin: auto;
+	width: 781px;
+	height: 150px;
+	background: transparent url('images/header.jpg') no-repeat;
+}
+
+header a {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  border: 0;
 }
 
 body
 {
-	background-color: rgb(245,245,220);
+	background-color: rgb(235,235,235);
 }
 
-nav ul 
+nav
 {
+	color: rgb(211,211,211);
+	font-size: 24px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 6px black;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 20px 150px 20px 150px;
+    padding: 5px;
     overflow: hidden;
     background-color: #333;
 }
 
+nav img
+{
+	float: left;
+}
+
 nav li 
 {
+	font-size: 16px;
 	float: left;
     display: inline;
 	border-right: 1px solid #bbb;
@@ -39,6 +59,55 @@ nav li a:hover
     background-color: #111;
 }
 
-.active {
+.active 
+{
     background-color: #4CAF50;
+}
+
+section
+{
+	float: left;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 1px 1px 6px gray;
+	width: 59%;
+	margin: 10px 0px 10px 0px;
+}
+
+section .title
+{
+	background-color: rgb(220,220,220);
+	border-bottom-width: 1px;
+	border-radius: 5px 5px 0px 0px;
+	border-color: black;
+	font-size: 22px;
+}
+
+section p
+{
+	padding: 20px;
+}
+
+aside
+{
+	float: right;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 1px 1px 6px gray;
+	width: 40%;
+	margin: 10px 0px 10px 0px;
+}
+
+aside .title
+{
+	background-color: rgb(220,220,220);
+	border-bottom-width: 1px;
+	border-radius: 5px 5px 0px 0px;
+	border-color: black;
+	font-size: 22px;
+}
+
+aside p
+{
+	padding: 20px;
 }
