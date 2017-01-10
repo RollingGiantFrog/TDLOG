@@ -1,1 +1,46 @@
-<h1>{{ recipe.recipe_text }}</h1>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'fridgeApp/stylesheet.css' %}" />
+<link rel="icon" href="{% static 'fridgeApp/icon.ico' %}" />
+
+<head>
+	<a href="#">
+        <img src="{% static 'fridgeApp/images/header.jpg' %}" border=0 >
+    </a>
+	<title>
+		Projet Frigo
+	</title>
+</head>
+
+<body>
+	<h1>{{ recipe.recipe_text }}</h1>
+	
+	<h3> Ingredients </h3>
+	<ul>
+	{% for ingredient in recipe.ingredient_set.all %}
+		<li> {{ingredient.ingredient_text}}: {{ingredient.quantity}} {{ingredient.unit}} </li>
+	{% endfor %}
+	</ul>
+	
+	<h3> Informations sur la recette </h3>
+	<ul>
+	{% for info in recipe.cook_information_set.all %}
+		<li> {{info.information_text}} : 
+		{% if info.value != 0 and info.value_unit == 'none' %} 
+			{{info.value|stringformat:"d"}}
+		{% else %}
+			{% if info.value != 0 %} {{info.value}} {% endif %}
+			{% if info.value_unit != 'none' %} {{info.value_unit}} {% endif %} </li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+	
+	<h3> Instructions </h3>
+	{{ recipe.instructions.instruction_text }}
+	
+	<footer>
+    <a href="{%url 'fridgeApp:recipe' recipe.id|add:-1%}">Précédent</a>&nbsp; |&nbsp;
+	<a href="{%url 'fridgeApp:recipe' recipe.id|add:'1'%}">Suivant</a> <br/>
+	<a href="{%url 'fridgeApp:home'%}">Retour à l'accueil</a>	
+	</footer>
+	
+</body>
