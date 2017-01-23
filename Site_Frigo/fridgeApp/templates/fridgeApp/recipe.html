@@ -1,18 +1,33 @@
 {% load static %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'fridgeApp/stylesheet.css' %}" />
 <link rel="icon" href="{% static 'fridgeApp/icon.ico' %}" />
 
 <head>
-	<a href="#">
-        <img src="{% static 'fridgeApp/images/header.jpg' %}" border=0 >
-    </a>
+	<meta charset="utf-8" />
+	
 	<title>
 		Projet Frigo
 	</title>
 </head>
-
 <body>
-	<h1>{{ recipe.recipe_text }}</h1>
+	<header>
+		<a href="fridgeApp/"></a>
+	</header>
+
+	<nav>
+		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
+		<strong>Projet Frigo, le site de recette pour étudiant !</strong>
+		<ul>
+			<li><a href="#about">Accueil</a></li>
+			<li><a class="active" href="recipe/1">Recherche</a></li>
+			<li><a href="#add">Ajouter une recette</a></li>
+			<li><a href="#who">Qui sommes-nous ?</a></li>
+		</ul>
+	</nav>
+	
+	<section>
+	<div class="title">{{ recipe.recipe_text }}</div>
 	
 	<h3> Ingredients </h3>
 	<ul>
@@ -37,6 +52,7 @@
 	<h3> Instructions </h3>
 	{{ recipe.instructions.instruction_text }}
 	
+	</section>
 	<footer>
     <a href="{%url 'fridgeApp:recipe' recipe.id|add:-1%}">Précédent</a>&nbsp; |&nbsp;
 	<a href="{%url 'fridgeApp:recipe' recipe.id|add:'1'%}">Suivant</a> <br/>

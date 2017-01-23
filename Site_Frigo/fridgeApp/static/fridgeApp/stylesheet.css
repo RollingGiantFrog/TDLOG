@@ -59,7 +59,7 @@ nav li a:hover
     background-color: #111;
 }
 
-.active 
+nav .active 
 {
     background-color: #4CAF50;
 }
@@ -70,7 +70,7 @@ section
 	background-color: white;
 	border-radius: 5px;
 	box-shadow: 1px 1px 6px gray;
-	width: 59%;
+	width: 69%;
 	margin: 10px 0px 10px 0px;
 }
 
@@ -94,7 +94,7 @@ aside
 	background-color: white;
 	border-radius: 5px;
 	box-shadow: 1px 1px 6px gray;
-	width: 40%;
+	width: 30%;
 	margin: 10px 0px 10px 0px;
 }
 
@@ -110,4 +110,19 @@ aside .title
 aside p
 {
 	padding: 20px;
+}
+
+form
+{
+	width: 500px;
+}
+
+form label
+{
+	width: 125px;
+}
+
+form input
+{
+	width: 125px;
 }

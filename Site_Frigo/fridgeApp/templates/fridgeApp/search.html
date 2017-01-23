@@ -1,0 +1,40 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'fridgeApp/stylesheet.css' %}" />
+<link rel="icon" href="{% static 'fridgeApp/icon.ico' %}" />
+
+<head>
+	<meta charset="utf-8" />
+	
+	<title>
+		Projet Frigo
+	</title>
+</head>
+
+<body>
+	<header>
+		<a href="fridgeApp/"></a>
+	</header>
+
+	<nav>
+		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
+		<strong>Projet Frigo, le site de recette pour étudiant !</strong>
+		<ul>
+			<li><a href="#about">Accueil</a></li>
+			<li><a class="active" href="search">Recherche</a></li>
+			<li><a href="recipe/1">Ajouter une recette</a></li>
+			<li><a href="#who">Qui sommes-nous ?</a></li>
+		</ul>
+	</nav>
+	
+	
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_table }}
+	</br>
+    <input type="submit" value="Rechercher" />
+
+</form>
+</body>
