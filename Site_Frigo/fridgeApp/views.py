@@ -42,3 +42,6 @@ class SearchRecipeForm(forms.Form):
 def search(request):
     form = SearchRecipeForm(request.POST or None)
     return render(request, 'fridgeApp/search.html', locals())
+    
+def who(request):
+    return render(request, 'fridgeApp/who.html', locals())
