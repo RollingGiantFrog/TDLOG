@@ -1,1 +1,59 @@
-﻿Coucou ! Nous cest Louis Kani Sév et Mathilde
+﻿{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'fridgeApp/stylesheet.css' %}" />
+<link rel="icon" href="{% static 'fridgeApp/icon.ico' %}" />
+
+<head>
+	<meta charset="utf-8" />
+	
+	<title>
+		Projet Frigo
+	</title>
+</head>
+<body>
+	<header>
+		<a href="fridgeApp/"></a>
+	</header>
+
+	<nav>
+		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
+		<strong>Projet Frigo, le site de recette pour étudiant !</strong>
+		<ul>
+			<li><a class="active" href="#about">Accueil</a></li>
+			<li><a href="#search">Recherche</a></li>
+			<li><a href="#add">Ajouter une recette</a></li>
+			<li><a href="#who">Qui sommes-nous ?</a></li>
+		</ul>
+	</nav>
+	
+	<section>
+		<div class="title"><strong>Bonjour</strong></div>
+		
+		<p>Coucou nous c'est Louis Mathilde Victor Séverine </p>
+	</section>
+	
+	<aside>
+		<div class="title"><strong>Louis</strong></div>
+		
+		<p>Louis est en IMI</p>
+	</aside>
+	
+	<section>
+		<div class="title"><strong>Mathilde</strong></div>
+		
+		<p>Mathilde est en GMM</p>
+	</section>
+	
+	<section>
+		<div class="title"><strong>Victor</strong></div>
+		
+		<p>Victor est en IMI</p>
+	</section>
+	<section>
+		<div class="title"><strong>Sév</strong></div>
+		
+		<p>Sév est en GI</p>
+	</section>
+
+
+</body>
