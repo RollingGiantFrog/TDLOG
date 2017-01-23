@@ -14,7 +14,7 @@ class IndexView(generic.ListView):
         return Recipe.objects.all()
         
 def Contact(request):
-    return(render(request, 'fridgeApp/contact.html'))
+    return(render(request, 'fridgeApp/contact.html', {}))
 
 def home(request):
     return render(request, 'fridgeApp/home.html', {})
