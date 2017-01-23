@@ -13,8 +13,11 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Recipe.objects.all()
         
-def Contact(request):
+def contact(request):
     return(render(request, 'fridgeApp/contact.html', {}))
+    
+def add(request):
+    return(render(request, 'fridgeApp/add.html', {}))
 
 def home(request):
     return render(request, 'fridgeApp/home.html', {})
