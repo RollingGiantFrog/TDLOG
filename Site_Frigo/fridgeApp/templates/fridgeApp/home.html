@@ -1,19 +1,6 @@
 ﻿{% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'fridgeApp/stylesheet.css' %}" />
-<link rel="icon" href="{% static 'fridgeApp/icon.ico' %}" />
-
-<head>
-	<meta charset="utf-8" />
-	
-	<title>
-		Projet Frigo
-	</title>
-</head>
 <body>
-	<header>
-		<a href="fridgeApp/"></a>
-	</header>
 
 	<nav>
 		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
@@ -25,6 +12,7 @@
 			<li><a href="../contact">Qui sommes-nous ?</a></li>
 		</ul>
 	</nav>
+	{% include "fridgeApp/includes/tabs.html" with active_tab='home' %}
 	
 	<section>
 		<div class="title"><strong>Nouvelle année</strong></div>

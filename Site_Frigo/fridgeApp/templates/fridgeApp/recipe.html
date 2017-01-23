@@ -1,30 +1,8 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'fridgeApp/stylesheet.css' %}" />
-<link rel="icon" href="{% static 'fridgeApp/icon.ico' %}" />
-
-<head>
-	<meta charset="utf-8" />
-	
-	<title>
-		Projet Frigo
-	</title>
-</head>
 <body>
-	<header>
-		<a href="fridgeApp/"></a>
-	</header>
 
-	<nav>
-		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
-		<strong>Projet Frigo, le site de recette pour étudiant !</strong>
-		<ul>
-			<li><a href="#about">Accueil</a></li>
-			<li><a class="active" href="recipe/1">Recherche</a></li>
-			<li><a href="#add">Ajouter une recette</a></li>
-			<li><a href="#who">Qui sommes-nous ?</a></li>
-		</ul>
-	</nav>
+	{% include "fridgeApp/includes/tabs.html" with active_tab='None' %}
 	
 	<section>
 	<div class="title">{{ recipe.recipe_text }}</div>
