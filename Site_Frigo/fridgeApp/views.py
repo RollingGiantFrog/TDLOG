@@ -62,9 +62,19 @@ class SearchRecipeForm(forms.Form):
         super(SearchRecipeForm, self).__init__(*args, **kwargs)
         # dynamic fields here ...
         for i in Ingredient.objects.all():
-            self.fields[i.ingredient_text] = forms.BooleanField(help_text="\n", required=False)
+            self.fields[i.ingredient_text] = forms.BooleanField(help_text=i.category, required=False)
     # normal fields here ...
             
 def search(request):
     form = SearchRecipeForm(request.POST or None)
+    
+    categories = []
+    ingredients = {}
+    
+    for text in form.fields:
+        if not form.fields[text].help_text in categories:
+            categories += [form.fields[text].help_text]
+            ingredients[form.fields[text].help_text] = [text]
+        else:  
+            ingredients[form.fields[text].help_text] += [text]
     return render(request, 'fridgeApp/search.html', locals())
