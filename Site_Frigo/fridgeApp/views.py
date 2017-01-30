@@ -41,7 +41,7 @@ def result(request):
     valid_recipes = []
     for recipe in recipes:
         N = 0
-        for ingredient in recipe.ingredient_set.all:
+        for ingredient in recipe.ingredient_set.all():
             if not form.cleaned_data[ingredient.ingredient_text]:
                 N += 1
         if N <= 2:
