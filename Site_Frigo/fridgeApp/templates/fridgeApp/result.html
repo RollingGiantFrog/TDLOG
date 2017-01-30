@@ -6,7 +6,7 @@
 <body>
 	{% include "fridgeApp/includes/tabs.html" with active_tab='search' %}
 	<p>
-	{% for recipe in valid_recipes %}
+	{% for missing,present,recipe in valid_recipes %}
 		<section>
 		<div class="title"><strong>{{recipe.recipe_text}}</strong></div>
 		<p><a href="recipe/{{recipe.id}}">En savoir plus</a></p>
