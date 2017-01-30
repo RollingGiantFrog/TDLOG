@@ -6,7 +6,11 @@
 <form action="../result" method="post">
 
     {% csrf_token %}
-	 
+	
+	<h1>Type de plat</h1>
+	{% for type in form.categories %}
+		<input id="id_{{ type }}" name="{{ type }}" type="checkbox" /><label for="id_{{ type }}">{{ type | capfirst}}</label><br />
+	{% endfor %}
 	
 	{% for category, ingredients in ingredients.items %}
 		<h1>{{ category | capfirst }}</h1>

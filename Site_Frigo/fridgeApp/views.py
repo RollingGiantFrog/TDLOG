@@ -63,11 +63,13 @@ class SearchRecipeForm(forms.Form):
         # dynamic fields here ...
         for i in Ingredient.objects.all():
             self.fields[i.ingredient_text] = forms.BooleanField(help_text=i.category, required=False)
-    # normal fields here ...
+        for j in Recipe.objects.all():
+            self.categories[Recipe.category] = forms.BooleanField(required=False)
+        # normal fields here ...
             
 def search(request):
     form = SearchRecipeForm(request.POST or None)
-    
+
     categories = []
     ingredients = {}
     

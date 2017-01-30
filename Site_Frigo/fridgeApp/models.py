@@ -12,7 +12,7 @@ class Recipe(models.Model):
     def __str__(self):
         return self.recipe_text
     
-class Cook_information(models.Model):
+class Cook_information(models.Model):|first
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     information_text = models.CharField(max_length = 200)
     value = models.FloatField()
