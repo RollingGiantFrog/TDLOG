@@ -40,13 +40,18 @@ def result(request):
     
     valid_recipes = []
     for recipe in recipes:
-        N = 0
+        missing = 0
+        present = 0
         for ingredient in recipe.ingredient_set.all():
             if not form.cleaned_data[ingredient.ingredient_text]:
-                N += 1
-        if N <= 2:
-            valid_recipes += [recipe]
-        
+                missing += 1
+            else:
+                present += 1
+                
+        valid_recipes += [(missing,-present,recipe)]
+        # On trie par ordre de nombre d'ingrédients manquants croissant 
+        # puis par nombre d'ingrédients présents décroissants
+        valid_recipes.sort()
     
     return render(request, 'fridgeApp/result.html', locals())
 
