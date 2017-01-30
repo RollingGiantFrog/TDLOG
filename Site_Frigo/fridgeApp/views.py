@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from operator import itemgetter
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
@@ -51,7 +52,7 @@ def result(request):
         valid_recipes += [(missing,-present,recipe)]
         # On trie par ordre de nombre d'ingrédients manquants croissant 
         # puis par nombre d'ingrédients présents décroissants
-        valid_recipes.sort()
+        valid_recipes.sort(key = itemgetter(0,1))
     
     return render(request, 'fridgeApp/result.html', locals())
 
