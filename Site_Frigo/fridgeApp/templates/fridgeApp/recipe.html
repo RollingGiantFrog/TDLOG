@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 
 <body>
 
@@ -10,7 +10,17 @@
 	<h3> Ingredients </h3>
 	<ul>
 	{% for ingredient in recipe.ingredient_set.all %}
-		<li> {{ingredient.ingredient_text}}: {{ingredient.quantity}} {{ingredient.unit}} </li>
+		<li> {{ingredient.ingredient_text}} : 
+		{% if ingredient.quantity|add:"0" == ingredient.quantity %}
+			{{ingredient.quantity|add:"0"}}
+		{% else %}
+			{{ingredient.quantity}}
+		{% endif %}
+
+		{% if ingredient.unit != 'none' %} 			
+			 {{ingredient.unit}} 
+		{% endif %}
+		</li>
 	{% endfor %}
 	</ul>
 	
@@ -28,7 +38,7 @@
 	</ul>
 	
 	<h3> Instructions </h3>
-	{{ recipe.instructions.instruction_text }}
+	{{recipe.instructions_set.all.0.instructions_text}}
 	
 	</section>
 	<footer>

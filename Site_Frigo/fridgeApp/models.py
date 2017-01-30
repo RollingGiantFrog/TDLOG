@@ -29,7 +29,7 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.ingredient_text
 
-class Instructions (models.Model):
+class Instructions(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     instructions_text = models.CharField(max_length = 1500)
     def __str__(self):
