@@ -3,30 +3,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'fridgeApp/stylesheet.css' %}" />
 <link rel="icon" href="{% static 'fridgeApp/icon.ico' %}" />
 
-<head>
-	<meta charset="utf-8" />
-	
-	<title>
-		Projet Frigo
-	</title>
-</head>
-
 <body>
-	<header>
-		<a href="fridgeApp/"></a>
-	</header>
-
-	<nav>
-		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
-		<strong>Projet Frigo, le site de recette pour étudiant !</strong>
-		<ul>
-			<li><a href="../home">Accueil</a></li>
-			<li><a class="active" href="../search">Recherche</a></li>
-			<li><a href="../add">Ajouter une recette</a></li>
-			<li><a href="../contact">Qui sommes-nous ?</a></li>
-		</ul>
-	</nav>
-	
+	{% include "fridgeApp/includes/tabs.html" with active_tab='search' %}
 	<p>
 	{% for recipe in valid_recipes %}
 		<section>

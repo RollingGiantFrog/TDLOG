@@ -2,16 +2,6 @@
 
 <body>
 
-	<nav>
-		<img src="{% static 'fridgeApp/icon.ico' %}"></img>
-		<strong>Projet Frigo, le site de recette pour étudiant !</strong>
-		<ul>
-			<li><a class="active" href="../home">Accueil</a></li>
-			<li><a href="../search">Recherche</a></li>
-			<li><a href="../add">Ajouter une recette</a></li>
-			<li><a href="../contact">Qui sommes-nous ?</a></li>
-		</ul>
-	</nav>
 	{% include "fridgeApp/includes/tabs.html" with active_tab='home' %}
 	
 	<section>
