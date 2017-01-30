@@ -18,6 +18,7 @@ class InstructionsInLine(admin.TabularInline):
 class RecipeAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,              {'fields':['recipe_text']}),
+        (None,              { 'fields':['category']}),
         ('Date information',{'fields':['pub_date'], 'classes':['collapse']}),
 #        ('Cooking information', {'fields':['cook_time','rest_time',
 #'preparation_time'], 'classes':['collapse']}),
