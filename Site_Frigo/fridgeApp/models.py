@@ -5,6 +5,7 @@ from django.db import models
 class Recipe(models.Model):
     recipe_text = models.CharField(max_length = 200)
     pub_date = models.DateTimeField('date published')
+    category = models.CharField(max_length = 200)
     #cook_time = models.FloatField()
     #rest_time = models.FloatField()
     #preparation_time = models.FloatField()
@@ -24,6 +25,7 @@ class Ingredient(models.Model):
     ingredient_text = models.CharField(max_length = 50)
     quantity = models.FloatField()
     unit = models.CharField(max_length = 30)
+    category = models.CharField(max_length = 200)
     def __str__(self):
         return self.ingredient_text
 
