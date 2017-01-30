@@ -1,10 +1,9 @@
 ﻿{% load static %}
 
 <body>
+{% include "fridgeApp/includes/tabs.html" with active_tab='search' %}
 
-	{% include "fridgeApp/includes/tabs.html" with active_tab='search' %}
-
-<form action="result" method="post">
+<form action="../result" method="post">
 
     {% csrf_token %}
 

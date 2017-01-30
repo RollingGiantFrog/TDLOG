@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic
@@ -27,7 +28,16 @@ def recipe(request, recipe_id):
     #return HttpResponseRedirect(reverse('fridgeApp:recipe',args=(recipe.id)))
     return render(request, 'fridgeApp/recipe.html', locals())
 
-
+def result(request):
+    form = SearchRecipeForm(request.POST)
+    if form.is_valid():
+        recipes = []
+        for text in form.fields:
+                if form.cleaned_data[text]:
+                    for i in Ingredient.objects.all().filter(ingredient_text = text):
+                        if not i.recipe in recipes:
+                            recipes += [i.recipe]
+    return render(request, 'fridgeApp/result.html', locals())
 
 from django import forms
 
@@ -36,7 +46,8 @@ class SearchRecipeForm(forms.Form):
         super(SearchRecipeForm, self).__init__(*args, **kwargs)
         # dynamic fields here ...
         for i in Ingredient.objects.all():
-            self.fields[i.ingredient_text] = forms.BooleanField(help_text="\n", required=False)
+            if not "grec" in i.ingredient_text:
+                self.fields[i.ingredient_text] = forms.BooleanField(help_text="\n", required=False)
     # normal fields here ...
             
 def search(request):
