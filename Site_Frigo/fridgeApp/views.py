@@ -77,4 +77,9 @@ def search(request):
             ingredients[form.fields[text].help_text] = [text]
         else:  
             ingredients[form.fields[text].help_text] += [text]
+            
+    categories.sort(key=lambda v: v.upper())
+    for category in categories:
+        ingredients[category].sort(key=lambda v: v.upper())
+        print ingredients[category]
     return render(request, 'fridgeApp/search.html', locals())
