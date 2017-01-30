@@ -37,6 +37,17 @@ def result(request):
                     for i in Ingredient.objects.all().filter(ingredient_text = text):
                         if not i.recipe in recipes:
                             recipes += [i.recipe]
+    
+    valid_recipes = []
+    for recipe in recipes:
+        N = 0
+        for ingredient in recipe.ingredient_set.all:
+            if not form.cleaned_data[ingredient.ingredient_text]:
+                N += 1
+        if N <= 2:
+            valid_recipes += [recipe]
+        
+    
     return render(request, 'fridgeApp/result.html', locals())
 
 from django import forms
@@ -46,8 +57,7 @@ class SearchRecipeForm(forms.Form):
         super(SearchRecipeForm, self).__init__(*args, **kwargs)
         # dynamic fields here ...
         for i in Ingredient.objects.all():
-            if not "grec" in i.ingredient_text:
-                self.fields[i.ingredient_text] = forms.BooleanField(help_text="\n", required=False)
+            self.fields[i.ingredient_text] = forms.BooleanField(help_text="\n", required=False)
     # normal fields here ...
             
 def search(request):

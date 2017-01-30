@@ -28,7 +28,7 @@
 	</nav>
 	
 	<p>
-	{% for recipe in recipes %}
+	{% for recipe in valid_recipes %}
 		<section>
 		<div class="title"><strong>{{recipe.recipe_text}}</strong></div>
 		<p><a href="recipe/{{recipe.id}}">En savoir plus</a></p>
