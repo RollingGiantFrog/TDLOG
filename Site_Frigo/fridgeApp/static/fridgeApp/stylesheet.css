@@ -119,10 +119,10 @@ form
 
 form label
 {
-	width: 125px;
 }
 
 form input
 {
-	width: 125px;
+	
+	vertical-align: middle;
 }

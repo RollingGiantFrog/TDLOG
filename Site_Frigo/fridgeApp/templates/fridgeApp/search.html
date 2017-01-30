@@ -7,7 +7,9 @@
 
     {% csrf_token %}
 
-    {{ form.as_table }}
+	{% for text in form.fields %}
+		<input id="id_{{ text }}" name="{{ text }}" type="checkbox" /><label for="id_{{ text }}">{{ text | capfirst}}</label><br />
+	{% endfor %}
 	</br>
     <input type="submit" value="Rechercher" />
 
