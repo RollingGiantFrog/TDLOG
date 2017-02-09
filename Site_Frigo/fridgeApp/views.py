@@ -33,10 +33,10 @@ def result(request):
     if form.is_valid():
         recipes = []
         for text in form.fields:
-                if form.cleaned_data[text]:
-                    for i in Ingredient.objects.all().filter(ingredient_text = text):
-                        if not i.recipe in recipes:
-                            recipes += [i.recipe]
+            if form.cleaned_data[text]:
+                for i in Ingredient.objects.all().filter(ingredient_text = text):
+                    if not i.recipe in recipes:
+                        recipes += [i.recipe]
     
     valid_recipes = []
     for recipe in recipes:
@@ -47,8 +47,9 @@ def result(request):
                 missing += 1
             else:
                 present += 1
-                
-        valid_recipes += [(missing,-present,recipe)]
+        
+        if form.cleaned_data[recipe.category]:
+            valid_recipes += [(missing,-present,recipe)]
         # On trie par ordre de nombre d'ingrédients manquants croissant 
         # puis par nombre d'ingrédients présents décroissants
         valid_recipes.sort(key = itemgetter(0,1))
@@ -63,25 +64,33 @@ class SearchRecipeForm(forms.Form):
         # dynamic fields here ...
         for i in Ingredient.objects.all():
             self.fields[i.ingredient_text] = forms.BooleanField(help_text=i.category, required=False)
+        
+        self.fields["entree"] = forms.BooleanField(required=False)
+        self.fields["plat"] = forms.BooleanField(required=False)
+        self.fields["dessert"] = forms.BooleanField(required=False)
+        
         #for j in Recipe.objects.all():
-        #    self.categories[Recipe.category] = forms.BooleanField(required=False)
+           #self.fields[j.category] = forms.BooleanField(help_text="", required=False)
         # normal fields here ...
             
 def search(request):
     form = SearchRecipeForm(request.POST or None)
-
+    
     categories = []
     ingredients = {}
     
     for text in form.fields:
-        if not form.fields[text].help_text in categories:
-            categories += [form.fields[text].help_text]
-            ingredients[form.fields[text].help_text] = [text]
-        else:  
-            ingredients[form.fields[text].help_text] += [text]
-            
+        if form.fields[text].help_text != "":
+            if not form.fields[text].help_text in categories:
+                categories += [form.fields[text].help_text]
+                ingredients[form.fields[text].help_text] = [text]
+            else:
+                ingredients[form.fields[text].help_text] += [text]
+
     categories.sort(key=lambda v: v.upper())
+
     for category in categories:
         ingredients[category].sort(key=lambda v: v.upper())
         print (ingredients[category])
+    
     return render(request, 'fridgeApp/search.html', locals())
