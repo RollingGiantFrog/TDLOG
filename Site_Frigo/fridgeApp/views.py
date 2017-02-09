@@ -63,8 +63,8 @@ class SearchRecipeForm(forms.Form):
         # dynamic fields here ...
         for i in Ingredient.objects.all():
             self.fields[i.ingredient_text] = forms.BooleanField(help_text=i.category, required=False)
-        for j in Recipe.objects.all():
-            self.categories[Recipe.category] = forms.BooleanField(required=False)
+        #for j in Recipe.objects.all():
+        #    self.categories[Recipe.category] = forms.BooleanField(required=False)
         # normal fields here ...
             
 def search(request):
@@ -83,5 +83,5 @@ def search(request):
     categories.sort(key=lambda v: v.upper())
     for category in categories:
         ingredients[category].sort(key=lambda v: v.upper())
-        print ingredients[category]
+        print (ingredients[category])
     return render(request, 'fridgeApp/search.html', locals())
