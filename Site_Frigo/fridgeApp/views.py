@@ -70,7 +70,8 @@ def result(request):
         missing = 0
         present = 0
         for ingredient in recipe.ingredient_set.all():
-            if not form.cleaned_data[ingredient.ingredient_text]:
+            text = normalize(ingredient.ingredient_text)
+            if (not text in form.cleaned_data or not form.cleaned_data[text]) and (not text + 's' in form.cleaned_data or not form.cleaned_data[text + 's']) and (not text[:len(text)-1] in form.cleaned_data or not form.cleaned_data[text[:len(text)-1]]):
                 missing += 1
             else:
                 present += 1
