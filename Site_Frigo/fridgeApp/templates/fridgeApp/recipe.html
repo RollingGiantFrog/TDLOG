@@ -38,13 +38,27 @@
 	</ul>
 	
 	<h3> Instructions </h3>
-	{{recipe.instructions_set.all.0.instructions_text}}
+	<p> {{recipe.instructions_set.all.0.instructions_text}} </p>
 	
 	</section>
-	<footer>
-    <a href="{%url 'fridgeApp:recipe' recipe.id|add:-1%}">Précédent</a>&nbsp; |&nbsp;
-	<a href="{%url 'fridgeApp:recipe' recipe.id|add:'1'%}">Suivant</a> <br/>
-	<a href="{%url 'fridgeApp:home'%}">Retour à l'accueil</a>	
-	</footer>
+	
+	<aside>
+		<div class="title"><strong>Navigation</strong></div>
+		<p>
+			<a href="{%url 'fridgeApp:recipe' recipe.id|add:-1%}">Précédent</a>&nbsp; |&nbsp;
+			<a href="{%url 'fridgeApp:recipe' recipe.id|add:'1'%}">Suivant</a> <br/>
+			<a href="{%url 'fridgeApp:result'%}">Retour aux resultats</a>			
+		</p>
+		
+		{% for missing,present,recipe in valid_recipes %}
+		
+		<div class="title"><strong>{{recipe.recipe_text}}</strong></div>
+		<p><a href="recipe/{{recipe.id}}">En savoir plus</a></p>
+		
+		{% endfor %}
+		
+	</aside>
+	
+	
 	
 </body>
