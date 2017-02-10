@@ -28,15 +28,42 @@ def recipe(request, recipe_id):
     #return HttpResponseRedirect(reverse('fridgeApp:recipe',args=(recipe.id)))
     return render(request, 'fridgeApp/recipe.html', locals())
 
+
+accents = [['é','è','ê'],['ù','û'],['à','â'],['î'],['ô']]
+vowels = ['e','u','a','i','o']
+
+def removeAccents(s):
+    for i in range(len(s)):
+        c = s[i]
+        for k in range(len(accents)):
+            if c in accents[k]:
+                s = s[:i] + vowels[k] + s[i+1:]
+                break
+    return s
+
+def normalize(s):
+    return removeAccents(s.lower())
+    
+def compare(s1,s2):
+    s1 = s1.lower()
+    s2 = s2.lower()
+    
+    s1 = removeAccents(s1)
+    s2 = removeAccents(s2)
+    
+    return s1 == s2
+
 def result(request):
     form = SearchRecipeForm(request.POST)
     if form.is_valid():
         recipes = []
         for text in form.fields:
             if form.cleaned_data[text]:
-                for i in Ingredient.objects.all().filter(ingredient_text = text):
-                    if not i.recipe in recipes:
-                        recipes += [i.recipe]
+                for i in Ingredient.objects.all():
+                    ingredient_text = normalize(i.ingredient_text)
+                    if ingredient_text == text or ingredient_text + 's' == text or ingredient_text[:len(ingredient_text)-1] == text:
+                        if not i.recipe in recipes:
+                            recipes += [i.recipe]
     
     valid_recipes = []
     for recipe in recipes:
@@ -61,9 +88,13 @@ class SearchRecipeForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(SearchRecipeForm, self).__init__(*args, **kwargs)
         # dynamic fields here ...
+        ingredient_texts = {}
         for i in Ingredient.objects.all():
-            self.fields[i.ingredient_text] = forms.BooleanField(help_text=i.category, required=False)
-        
+            text = normalize(i.ingredient_text)
+            if not text in ingredient_texts and not text[:len(text)-1] in ingredient_texts and not text + 's' in ingredient_texts:
+                self.fields[i.ingredient_text] = forms.BooleanField(help_text=i.category, required=False)
+                ingredient_texts[text] = True
+                
         self.fields["entree"] = forms.BooleanField(required=False)
         self.fields["plat"] = forms.BooleanField(required=False)
         self.fields["dessert"] = forms.BooleanField(required=False)
