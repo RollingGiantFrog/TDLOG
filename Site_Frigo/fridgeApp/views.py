@@ -47,13 +47,12 @@ def result(request):
                 missing += 1
             else:
                 present += 1
-        
-        if form.cleaned_data[recipe.category]:
-            valid_recipes += [(missing,-present,recipe)]
+        valid_recipes += [(missing,-present,recipe)]
         # On trie par ordre de nombre d'ingrédients manquants croissant 
         # puis par nombre d'ingrédients présents décroissants
         valid_recipes.sort(key = itemgetter(0,1))
-    
+
+    length=len(valid_recipes)
     return render(request, 'fridgeApp/result.html', locals())
 
 from django import forms
@@ -94,3 +93,5 @@ def search(request):
         print (ingredients[category])
     
     return render(request, 'fridgeApp/search.html', locals())
+    
+    

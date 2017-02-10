@@ -6,6 +6,12 @@
 <body>
 	{% include "fridgeApp/includes/tabs.html" with active_tab='search' %}
 	<p>
+	{% if length == 0 %}
+		<section>
+		<div class="title"><strong>Aucune recette trouvée</strong></div>
+		<p><a href="search">Retour à la recherche</a></p>
+		</section>
+	{% endif %}
 	{% for missing,present,recipe in valid_recipes %}
 		<section>
 		<div class="title"><strong>{{recipe.recipe_text}}</strong></div>
