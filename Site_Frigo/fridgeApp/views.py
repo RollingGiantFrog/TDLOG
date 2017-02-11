@@ -93,7 +93,7 @@ class SearchRecipeForm(forms.Form):
         for i in Ingredient.objects.all():
             text = normalize(i.ingredient_text)
             if not text in ingredient_texts and not text[:len(text)-1] in ingredient_texts and not text + 's' in ingredient_texts:
-                self.fields[i.ingredient_text] = forms.BooleanField(help_text=i.category, required=False)
+                self.fields[text] = forms.BooleanField(help_text=i.category, required=False)
                 ingredient_texts[text] = True
                 
         self.fields["entree"] = forms.BooleanField(required=False)
