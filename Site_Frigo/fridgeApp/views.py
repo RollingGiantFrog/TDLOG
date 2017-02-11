@@ -56,13 +56,22 @@ def compare(s1,s2):
 def result(request):
     form = SearchRecipeForm(request.POST)
     if form.is_valid():
-        recipes = []
+        recipeType = ""
+        if form.cleaned_data[normalize("entree")]:
+            recipeType = normalize("entree")
+        if form.cleaned_data[normalize("plat")]:
+            recipeType = normalize("plat")
+        if form.cleaned_data[normalize("dessert")]:
+            recipeType = normalize("dessert")
+            
+        recipes = []        
+            
         for text in form.fields:
             if form.cleaned_data[text]:
                 for i in Ingredient.objects.all():
                     ingredient_text = normalize(i.ingredient_text)
                     if ingredient_text == text or ingredient_text + 's' == text or ingredient_text[:len(ingredient_text)-1] == text:
-                        if not i.recipe in recipes:
+                        if (recipeType == normalize(i.recipe.category)[len(recipeType)]) and not i.recipe in recipes:
                             recipes += [i.recipe]
     
     valid_recipes = []
@@ -96,9 +105,9 @@ class SearchRecipeForm(forms.Form):
                 self.fields[text] = forms.BooleanField(help_text=i.category, required=False)
                 ingredient_texts[text] = True
                 
-        self.fields["entree"] = forms.BooleanField(required=False)
-        self.fields["plat"] = forms.BooleanField(required=False)
-        self.fields["dessert"] = forms.BooleanField(required=False)
+        self.fields[normalize("entree")] = forms.BooleanField(required=False)
+        self.fields[normalize("plat")] = forms.BooleanField(required=False)
+        self.fields[normalize("dessert")] = forms.BooleanField(required=False)
         
         #for j in Recipe.objects.all():
            #self.fields[j.category] = forms.BooleanField(help_text="", required=False)
