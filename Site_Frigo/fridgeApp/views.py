@@ -57,14 +57,14 @@ def result(request):
     form = SearchRecipeForm(request.POST)
     if form.is_valid():
         recipeType = ""
-        recipeTypeLength = len(recipeType)
         if form.cleaned_data[normalize("entree")]:
             recipeType = normalize("entree")
         if form.cleaned_data[normalize("plat")]:
             recipeType = normalize("plat")
         if form.cleaned_data[normalize("dessert")]:
             recipeType = normalize("dessert")
-            
+        recipeTypeLength = len(recipeType)
+        
         recipes = []        
             
         for text in form.fields:
