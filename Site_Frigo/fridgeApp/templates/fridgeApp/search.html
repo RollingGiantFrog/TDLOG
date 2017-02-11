@@ -21,11 +21,26 @@
       source: availableTags
     });
   } );
+  function validerIngredient(){
+			var ingredient =  document.getElementById("id_" + document.getElementById("tags").value.toLowerCase());
+		if (typeof(ingredient) != 'undefined' && ingredient != null)
+		{
+			ingredient.checked = true;
+			document.getElementById("ingredientValide").innerHTML = "Votre ingrédient a été ajouté !";
+			document.getElementById("tags").value = "";
+		}
+		else
+		{
+			document.getElementById("ingredientValide").innerHTML = "Cet ingrédient n'est pas dans la liste !";
+		}
+    }
   </script>
 
 <div class="ui-widget">
   <label for="tags">Entrez vos ingrédients : </label>
   <input id="tags">
+  <button id="validerIngredient" onClick="validerIngredient()">Ajouter</button>
+  <label id="ingredientValide"><label>
 </div>
 
 <form action="../result" method="post">
