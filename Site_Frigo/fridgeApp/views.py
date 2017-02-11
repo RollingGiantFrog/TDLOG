@@ -57,6 +57,7 @@ def result(request):
     form = SearchRecipeForm(request.POST)
     if form.is_valid():
         recipeType = ""
+        recipeTypeLength = len(recipeType)
         if form.cleaned_data[normalize("entree")]:
             recipeType = normalize("entree")
         if form.cleaned_data[normalize("plat")]:
@@ -71,7 +72,9 @@ def result(request):
                 for i in Ingredient.objects.all():
                     ingredient_text = normalize(i.ingredient_text)
                     if ingredient_text == text or ingredient_text + 's' == text or ingredient_text[:len(ingredient_text)-1] == text:
-                        if (recipeType == normalize(i.recipe.category)[len(recipeType)]) and not i.recipe in recipes:
+                        category = normalize(i.recipe.category)
+                        length = min(len(category),recipeTypeLength)
+                        if (recipeType[:length] == category[:length]) and not i.recipe in recipes:
                             recipes += [i.recipe]
     
     valid_recipes = []
