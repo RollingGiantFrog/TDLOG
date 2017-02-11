@@ -112,18 +112,24 @@ aside p
 	padding: 20px;
 }
 
-form
+.ingredient
 {
-	width: 500px;
+	width: 25%;
+	float: left;
 }
 
-form label
+.category_ingredients
 {
-	
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 1px 1px 6px gray;
+	padding:10px 0px 10px 0px;
 }
 
-form input
+.category
 {
-	
-	vertical-align: middle;
+	background-color: lightblue;
+	border-radius: 5px;
+	box-shadow: 1px 1px 6px gray;
+	margin: 10px 0px 10px 0px;
 }

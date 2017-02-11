@@ -11,7 +11,7 @@
     var availableTags = [
 		{% for category, ingredients in ingredients.items %}
 		{% for text in ingredients %}
-      "{{ text }}",
+      "{{ text | capfirst}}",
 	  {% endfor %}
 	  {% endfor %}
 	  ""
@@ -24,7 +24,7 @@
   </script>
 
 <div class="ui-widget">
-  <label for="tags">Tags: </label>
+  <label for="tags">Entrez vos ingrédients : </label>
   <input id="tags">
 </div>
 
@@ -45,13 +45,21 @@
 	{% endfor %}
 	
 	{% for category, ingredients in ingredients.items %}
-		<h1>{{ category | capfirst }}</h1>
+	<div class="category">
+		<h2>{{ category | capfirst }}</h2>
+		<div class="category_ingredients">
 		{% for text in ingredients %}
-			<input id="id_{{ text }}" name="{{ text }}" type="checkbox" /><label for="id_{{ text }}">{{ text | capfirst}}</label><br />
-		{% endfor %}
+			{% if forloop.counter|divisibleby:4 %}
+			{% endif %}
+			<div class="ingredient"><input id="id_{{ text }}" name="{{ text }}" type="checkbox" /><label for="id_{{ text }}">{{ text | capfirst}}</label></div>
+			{% if forloop.counter|divisibleby:4 %}
+				<br />
+			{% endif %}
+		{% endfor %}<br />
+		</div>
+	</div>
 	{% endfor %}
 	</br>
     <input type="submit" value="Rechercher" />
-
 </form>
 </body>
