@@ -4,8 +4,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
+from django.utils import timezone
 
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, Cook_information, Instructions
 # Create your views here.
 class IndexView(generic.ListView):
     template_name = "fridgeApp/index.html"
@@ -16,9 +17,6 @@ class IndexView(generic.ListView):
         
 def contact(request):
     return(render(request, 'fridgeApp/contact.html', {}))
-    
-def add(request):
-    return(render(request, 'fridgeApp/add.html', {}))
 
 def home(request):
     return render(request, 'fridgeApp/home.html', {})
@@ -138,4 +136,106 @@ def search(request):
     
     return render(request, 'fridgeApp/search.html', locals())
     
+class AddRecipeForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(AddRecipeForm, self).__init__(*args, **kwargs)
+        self.fields['recipe_text'] = forms.CharField(label = "Nom de la recette ")
+        self.fields['category'] = forms.ChoiceField( (("entree", "Entrée"), ("plat", "Plat"), ("dessert", "Dessert")), label = "Catégorie" )
+        
+class AddIngredientForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(AddIngredientForm, self).__init__(*args, **kwargs)
+        self.fields['ingredient_text'] = forms.CharField(label = "Nom de l'ingrédient ")
+        self.fields['quantity'] = forms.IntegerField(label = "Quantitée ")
+        self.fields['unit'] = forms.CharField(label = "Unité ")
+        self.fields['category'] = forms.ChoiceField( (  ("Légume", "Légume"), 
+                                                        ("Produit laitier", "Produit laitier"),
+                                                        ("Condiment", "Condiment"),
+                                                        ("Fruit", "Fruit"),
+                                                        ("Féculent", "Féculent"),
+                                                        ("Viande ou Poisson", "Viande ou Poisson"),
+                                                        ("Autre", "Autre")
+                                                            ), label = "Catégorie"  )
+
+class AddInformationForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(AddInformationForm, self).__init__(*args, **kwargs)
+        self.fields['information_text'] = forms.CharField(label = "Information")
+        self.fields['value'] = forms.FloatField(label = "Valeur")
+        self.fields['value_unit'] = forms.CharField(label = "Unité de la valeur")
+        
+class AddInstructionsForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(AddInstructionsForm, self).__init__(*args, **kwargs)
+        self.fields['instructions_text'] = forms.CharField(widget=forms.Textarea, label = "Instructions")
+        
+def addDone(request):
+    recipeForm = AddRecipeForm(request.POST)
+    
+    ingredientForm = AddIngredientForm()
+    # Création du formset avec une seule itération : extra=1
+    ingredientForm = forms.formset_factory(AddIngredientForm,extra=1)   
+    # Récupération du formulaire géré par le mécanisme formset
+    ingredientFormset = ingredientForm(request.POST)
+    
+    informationsForm = AddInformationForm()
+    informationForm = forms.formset_factory(AddInformationForm, extra=0)
+    informationFormset = informationForm(request.POST)
+    
+    instructionsForm = AddInstructionsForm(request.POST)
+    
+    if recipeForm.is_valid() and ingredientFormset.is_valid() and informationFormset.is_valid() and instructionsForm.is_valid():
+            name = str(recipeForm.cleaned_data['recipe_text'])
+            category0 = str(recipeForm.cleaned_data['category'])
+            pub_date = timezone.now()
+            recipe = Recipe.create(name, pub_date, category0)
+            try:
+                recipe.save()
+            except:
+                print("error saving the recipe")
+                
+            foreignKey = recipe  
+
+            for form in ingredientFormset:
+                ingredient_text = str(form.cleaned_data['ingredient_text']).lower()
+                quantity = float(form.cleaned_data['quantity'])
+                unit = str(form.cleaned_data['unit']).lower()
+                category = str(form.cleaned_data['category']).lower()
+                ingredient = Ingredient.create(foreignKey, ingredient_text, quantity, unit, category)
+                ingredient.save()
+                
+            for form in informationFormset:
+                information_text = str(form.cleaned_data['information_text']).lower()
+                value = float(form.cleaned_data['value'])
+                value_unit = str(form.cleaned_data['value_unit']).lower()
+                information = Cook_information.create(foreignKey, information_text, value, value_unit)
+                information.save()
+                
+            instructions_text = str(instructionsForm.cleaned_data['instructions_text'])
+            instructions = Instructions.create(foreignKey, instructions_text)
+            instructions.save()
+            
+                
+
+    return render(request, 'fridgeApp/addDone.html',locals())
+        
+def add(request):
+    recipeForm = AddRecipeForm()
+    
+    ingredientForm = AddIngredientForm()
+    #Création du formset avec une seule itération : extra=1
+    ingredientForm = forms.formset_factory(AddIngredientForm,extra=1)   
+    # Récupération du formulaire géré par le mécanisme formset
+    ingredientFormset = ingredientForm()
+    
+    informationForm = AddInformationForm()
+    #Création du formset avec aucune itération : extra=0
+    informationForm = forms.formset_factory(AddInformationForm,extra=0)   
+    # Récupération du formulaire géré par le mécanisme formset
+    informationFormset = informationForm()
+    
+    instructionsForm = AddInstructionsForm()
+    
+    return render(request, 'fridgeApp/add.html', locals())
+        
     

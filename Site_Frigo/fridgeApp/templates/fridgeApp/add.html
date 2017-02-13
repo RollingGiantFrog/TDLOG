@@ -2,10 +2,165 @@
 
 <body>
 	{% include "fridgeApp/includes/tabs.html" with active_tab='add' %}
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div id="my_form">
 	
-	<section>
-	<div class="title"><strong>Mais il n'y a rien sur cette page ?</strong></div>
-		Tu l'as dit l'ami !
-	</section>
+	  <script>
+	  $(document).ready(function(){
+
+		/**************************************************************************
+		*
+		*                                      Gesion ADD REMOVE Formset 
+		*
+		***************************************************************************/
+
+		index_form = function( fset, index ){
+
+			$(fset).find(':input').each(function() {
+				var name = $(this).attr('name').replace( new RegExp('(\_\_prefix\_\_|\\d)') , index );
+				var id = 'id_' + name;
+				$(this).attr({'name': name, 'id': id});
+			});
+
+			$(fset).find('label').each(function() {
+				var newFor = $(this).attr('for').replace( new RegExp('(\_\_prefix\_\_|\\d)') , index );
+				var id = 'label_' + newFor;
+				$(this).attr({'id':id, 'for':newFor});
+			});
+
+		}
+
+		reindex_formset = function( formset_zone ){
+
+			var formset = $(formset_zone).find( '.nsorte' );
+			for( var cpt=0;cpt<formset.length;cpt++ ){
+				index_form( formset[cpt], cpt );
+			};
+
+			$("#id_form-TOTAL_FORMS").val( parseInt( cpt ) );
+
+		};
+
+
+
+		/**************************************************************************
+		*
+		*                               Gesion Des evenements formulaire
+		*
+		***************************************************************************/
+
+
+		set_event = function(){
+				//Bind le(s) bt delete sorte
+				$(".bt_rm_sorte").on('click',function(){
+					$(this).parents(".nsorte").remove();
+					reindex_formset( "#formsetZone" );
+				});
+		};
+
+		$("#bt_add_sorte").on('click',function(){
+
+			//Copy eform
+			$( "#eform" ).clone(true).appendTo( $("#formsetZone") );
+
+			reindex_formset( "#formsetZone" );
+
+		});
+
+		/**************************************************************************
+		*
+		*                               Gesion Des evenements formulaire
+		*
+		***************************************************************************/
+
+	
+		set_event2 = function(){
+				//Bind le(s) bt delete sorte
+				$(".bt_rm_sorte_info").on('click',function(){
+					$(this).parents(".nsorte2").remove();
+					reindex_formset( "#formsetZone2" );
+				});
+		};
+	
+		$("#bt_add_sorte_info").on('click',function(){
+
+			//Copy eform
+			$( "#eform2" ).clone(true).appendTo( $("#formsetZone2") );
+
+			reindex_formset( "#formsetZone2" );
+
+		});
+	
+		set_event();
+		set_event2();
+
+
+		});
+	  
+	  </script>
+	  
+	
+	
+	<form action="./done" name="form" method="post">
+	
+	{% csrf_token %}
+	
+	{{recipeForm}}
+	
+	<h3> Ingredients  <button class="btn btn-success btn-sm" id="bt_add_sorte" type="button">+</button> </h3>
+	<!-- Le formulaire standard -->
+
+	{{ ingredientForm.management_form }}
+		<!-- Les formulaires du formset -->
+		<div id="formsetZone">
+			{% for form in ingredientForm %}
+				<div class="nsorte">
+				{{ form.as_ul }} <br>
+				</div>
+			{% endfor %}
+		</div>
+		
+	<h3> Information <button class="btn btn-success btn-sm" id="bt_add_sorte_info" type="button">+</button> </h3>
+	{{ informationForm.management_form }}
+		<!-- Les formulaires du formset -->
+		<div id="formsetZone2">
+			{% for form in informationForm %}
+				<div class="nsorte2">
+				{{ form }} <br>
+				</div>
+			{% endfor %}
+		</div>
+	
+	<h3> Instructions </h3>
+	{{ instructionsForm }}	
+	
+	<input type="submit" value="Ajouter la recette" />
+	</form>
+	
+	
+	
+</div>
+
+	<!-- Element à copier pour un ajout au formset -->
+	<div style="display:none;">
+		<div id="eform" class="nsorte" >
+			{{ ingredientForm.empty_form.as_ul }} <br>
+			<div class='btn btn-warning btn-sm bt_rm_sorte'>
+					<i class='glyphicon glyphicon-trash'></i>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Element à copier pour un ajout au formset -->
+	<div style="display:none;">
+		<div id="eform2" class="nsorte2" >
+			{{ informationForm.empty_form}} <br>
+			<div class='btn btn-warning btn-sm bt_rm_sorte_info'>
+					<i class='glyphicon glyphicon-trash'></i>
+			</div>
+		</div>
+	</div>
 	
 </body>

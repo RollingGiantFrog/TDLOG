@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^search/$', views.search, name='search'),
     url(r'^add/$', views.add, name='add'),
     url(r'^result$', views.result, name='result'),
+    url(r'^add/done$', views.addDone, name='addDone'),
 ]
