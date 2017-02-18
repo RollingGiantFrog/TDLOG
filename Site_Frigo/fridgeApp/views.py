@@ -160,9 +160,11 @@ class AddIngredientForm(forms.Form):
 class AddInformationForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(AddInformationForm, self).__init__(*args, **kwargs)
-        self.fields['information_text'] = forms.CharField(label = "Information")
-        self.fields['value'] = forms.FloatField(label = "Valeur")
-        self.fields['value_unit'] = forms.CharField(label = "Unité de la valeur")
+        for information_text in ['Temps de préparation', 'Nombre de personnes', 'Temps de cuisson', 'Température de cuisson']:
+            #self.fields['information_text'+str(i)] = forms.CharField(label = "Information", required = False)
+            self.fields[information_text] = forms.BooleanField(label = information_text, required=False)
+            self.fields[information_text+'_value'] = forms.FloatField(label = "Valeur", required = False)
+            self.fields[information_text+'_value_unit'] = forms.CharField(label = "Unité de la valeur", required = False)
         
 class AddInstructionsForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -178,13 +180,11 @@ def addDone(request):
     # Récupération du formulaire géré par le mécanisme formset
     ingredientFormset = ingredientForm(request.POST)
     
-    informationsForm = AddInformationForm()
-    informationForm = forms.formset_factory(AddInformationForm, extra=0)
-    informationFormset = informationForm(request.POST)
+    informationForm = AddInformationForm(request.POST)
     
     instructionsForm = AddInstructionsForm(request.POST)
     
-    if recipeForm.is_valid() and ingredientFormset.is_valid() and informationFormset.is_valid() and instructionsForm.is_valid():
+    if recipeForm.is_valid() and ingredientFormset.is_valid() and informationForm.is_valid() and instructionsForm.is_valid():
             name = str(recipeForm.cleaned_data['recipe_text'])
             category0 = str(recipeForm.cleaned_data['category'])
             pub_date = timezone.now()
@@ -204,13 +204,20 @@ def addDone(request):
                 ingredient = Ingredient.create(foreignKey, ingredient_text, quantity, unit, category)
                 ingredient.save()
                 
-            for form in informationFormset:
-                information_text = str(form.cleaned_data['information_text']).lower()
-                value = float(form.cleaned_data['value'])
-                value_unit = str(form.cleaned_data['value_unit']).lower()
+            
+            
+            for information_text in ['Temps de préparation', 'Nombre de personnes', 'Temps de cuisson', 'Température de cuisson']:
+                #information_text.append(str(informationForm.cleaned_data['information_text'+str(i)]))
+                value = str(informationForm.cleaned_data[information_text+'_value'])
+                value_unit = str(informationForm.cleaned_data[information_text+'_value_unit'])
                 information = Cook_information.create(foreignKey, information_text, value, value_unit)
-                information.save()
-                
+                if informationForm.cleaned_data[information_text] == True:
+                    try:
+                        information.save()
+                    except:
+                        print("error saving the cooking information")
+            
+
             instructions_text = str(instructionsForm.cleaned_data['instructions_text'])
             instructions = Instructions.create(foreignKey, instructions_text)
             instructions.save()
@@ -228,12 +235,8 @@ def add(request):
     # Récupération du formulaire géré par le mécanisme formset
     ingredientFormset = ingredientForm()
     
-    informationForm = AddInformationForm()
-    #Création du formset avec aucune itération : extra=0
-    informationForm = forms.formset_factory(AddInformationForm,extra=0)   
-    # Récupération du formulaire géré par le mécanisme formset
-    informationFormset = informationForm()
-    
+    informationForm = AddInformationForm()    
+
     instructionsForm = AddInstructionsForm()
     
     return render(request, 'fridgeApp/add.html', locals())
