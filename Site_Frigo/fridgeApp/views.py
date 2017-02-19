@@ -147,14 +147,14 @@ class AddIngredientForm(forms.Form):
         super(AddIngredientForm, self).__init__(*args, **kwargs)
         self.fields['ingredient_text'] = forms.CharField(label = "Nom de l'ingrédient ")
         self.fields['quantity'] = forms.IntegerField(label = "Quantitée ")
-        self.fields['unit'] = forms.CharField(label = "Unité ")
-        self.fields['category'] = forms.ChoiceField( (  ("Légume", "Légume"), 
-                                                        ("Produit laitier", "Produit laitier"),
-                                                        ("Condiment", "Condiment"),
-                                                        ("Fruit", "Fruit"),
-                                                        ("Féculent", "Féculent"),
-                                                        ("Viande ou Poisson", "Viande ou Poisson"),
-                                                        ("Autre", "Autre")
+        self.fields['unit'] = forms.CharField(label = "Unité (none si pas d'unité) ")
+        self.fields['category'] = forms.ChoiceField( (  ("légume", "Légume"), 
+                                                        ("produit laitier", "Produit laitier"),
+                                                        ("condiment", "Condiment"),
+                                                        ("fruit", "Fruit"),
+                                                        ("féculent", "Féculent"),
+                                                        ("viande ou poisson", "Viande ou Poisson"),
+                                                        ("autre", "Autre")
                                                             ), label = "Catégorie"  )
 
 class AddInformationForm(forms.Form):
