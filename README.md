@@ -1,5 +1,2 @@
 # TDLOG
-#Coucou c'est Victor
-#Mathilde
-#C'est Louis aussi
-et sev :(
+Project to create a website to request recipes based on available ingredients.
